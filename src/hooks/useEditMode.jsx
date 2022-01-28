@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+import { useTemplateContext } from "../context/TemplateContext";
 
-import { setTemplateAction, useStore } from "../store";
 import { useNavigateWithSearch } from "./useNavigateWithSearch";
 import { useTranslation } from "./useTranslation";
 
@@ -10,7 +10,7 @@ export const useEditMode = (templateId) => {
   const navigate = useNavigateWithSearch();
   const [params] = useSearchParams();
   const { i18n } = useTranslation();
-  const setTemplate = useStore(setTemplateAction);
+  const { setTemplate } = useTemplateContext();
   const isEditing = params.get("edt");
 
   const handleEditMode = useCallback(

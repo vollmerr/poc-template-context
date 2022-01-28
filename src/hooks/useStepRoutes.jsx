@@ -1,13 +1,13 @@
 import { useLocation, Navigate, useRoutes } from "react-router-dom";
-
-import { useStore, selectStepDefaultStep } from "../store";
+import { useTemplateContext } from "../context/TemplateContext";
 
 export const useStepRoutes = (routes) => {
   const { search } = useLocation();
-  const defaultStep = useStore(selectStepDefaultStep);
+  const { template } = useTemplateContext();
+  const defaultRoute = `${template.steps.defaultStep}${search}`;
 
   return useRoutes([
     ...routes,
-    { path: "*", element: <Navigate to={`${defaultStep}${search}`} replace /> },
+    { path: "*", element: <Navigate to={defaultRoute} replace /> },
   ]);
 };

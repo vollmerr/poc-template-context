@@ -1,11 +1,11 @@
-import { useStore, selectPurchaseProps } from "../store";
+import { useTemplateContext } from "../context/TemplateContext";
 
 const Purchase = ({ name }) => {
-  const purchaseProps = useStore(selectPurchaseProps);
+  const { template } = useTemplateContext();
 
   return (
     <pre>
-      {name} - purchaseProps: {JSON.stringify(purchaseProps)}
+      {name} - purchaseProps: {JSON.stringify(template.purchase)}
     </pre>
   );
 };

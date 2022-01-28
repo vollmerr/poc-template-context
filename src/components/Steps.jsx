@@ -1,25 +1,20 @@
-import {
-  useStore,
-  selectSteps,
-  selectStepProps,
-  selectStepSelected,
-} from "../store";
+import { useTemplateContext } from "../context/TemplateContext";
+import { useRenderCount } from "../hooks";
 
 const Steps = ({ name }) => {
-  const stepSelected = useStore(selectStepSelected);
-  const stepProps = useStore(selectStepProps);
-  const steps = useStore(selectSteps);
+  const { stepSelected, steps, template } = useTemplateContext();
+  const renderCount = useRenderCount();
 
   return (
     <div>
       <pre>
-        {name} - selectedStep: {JSON.stringify(stepSelected)}
+        {name} ({renderCount}) - selectedStep: {JSON.stringify(stepSelected)}
       </pre>
       <pre>
-        {name} - stepProps: {JSON.stringify(stepProps)}
+        {name} ({renderCount}) - stepProps: {JSON.stringify(template.steps)}
       </pre>
       <pre>
-        {name} - steps: {JSON.stringify(steps)}
+        {name} ({renderCount}) - steps: {JSON.stringify(steps)}
       </pre>
     </div>
   );

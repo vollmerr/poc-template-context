@@ -1,8 +1,8 @@
 import useSWRImmutable from "swr/immutable";
 
 const data = [
-  { id: "plan-1", a: 1 },
-  { id: "plan-2", b: 2 },
+  { code: "plan-1", a: 1 },
+  { code: "plan-2", b: 2 },
 ];
 
 export const fetchPlans = () => Promise.resolve(data);

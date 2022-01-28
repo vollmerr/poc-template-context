@@ -3,29 +3,19 @@ import { useEffect } from "react";
 import { Route, Routes, useSearchParams } from "react-router-dom";
 
 import Params from "../components/Params";
-import RenderCount from "../components/RenderCount";
 import { lazyTemplates } from "../templates";
-import {
-  useAnalytics,
-  useEditMode,
-  useFavicon,
-  useNavigateWithSearch,
-  usePlansLoader,
-  useTemplatesLoader,
-  useTitle,
-} from "../hooks";
+import { useTemplate } from "../services/template";
+import { usePlans } from "../services/plans";
+import { useNavigateWithSearch } from "../hooks";
+import { TemplateProvider } from "../context/TemplateContext";
+import { PlanProvider } from "../context/PlanContext";
 
 const TemplatePage = () => {
   const navigate = useNavigateWithSearch();
   const [params] = useSearchParams();
   const id = params.get("id");
-  const template = useTemplatesLoader(id);
-  const plans = usePlansLoader();
-
-  useAnalytics(template?.id);
-  useEditMode(template?.id);
-  useFavicon(template?.page.favicon);
-  useTitle(template?.page.title);
+  const { data: template } = useTemplate(id);
+  const { data: plans } = usePlans();
 
   useEffect(() => {
     if (!id) navigate("/home");
@@ -42,15 +32,16 @@ const TemplatePage = () => {
   }
 
   return (
-    <div>
-      <Params name="TemplatePage" />
-      <RenderCount name="TemplatePage" />
-      <Routes>
-        {Object.entries(lazyTemplates).map(([path, Element]) => (
-          <Route key={path} path={`${path}/*`} element={<Element />} />
-        ))}
-      </Routes>
-    </div>
+    <TemplateProvider initialState={template}>
+      <PlanProvider initialState={plans}>
+        <Params name="TemplatePage" />
+        <Routes>
+          {Object.entries(lazyTemplates).map(([path, Element]) => (
+            <Route key={path} path={`${path}/*`} element={<Element />} />
+          ))}
+        </Routes>
+      </PlanProvider>
+    </TemplateProvider>
   );
 };
 

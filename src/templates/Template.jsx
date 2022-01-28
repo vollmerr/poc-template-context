@@ -5,12 +5,17 @@ import Params from "../components/Params";
 import Plans from "../components/Plans";
 import Purchase from "../components/Purchase";
 import Steps from "../components/Steps";
-import RenderCount from "../components/RenderCount";
-import { setStepSelectedAction, useStore } from "../store";
+import { useAnalytics, useEditMode, useFavicon, useTitle } from "../hooks";
+import { useTemplateContext } from "../context/TemplateContext";
 
 const Template = ({ name, children }) => {
+  const { template, setStepSelected } = useTemplateContext();
   const stepKey = useParams()["*"];
-  const setStepSelected = useStore(setStepSelectedAction);
+
+  useAnalytics(template.id);
+  useEditMode(template.id);
+  useFavicon(template.page.favicon);
+  useTitle(template.page.title);
 
   useEffect(() => {
     setStepSelected(stepKey);
@@ -22,7 +27,6 @@ const Template = ({ name, children }) => {
       <Purchase name={name} />
       <Plans name={name} />
       <Steps name={name} />
-      <RenderCount name={name} />
 
       {children}
     </div>

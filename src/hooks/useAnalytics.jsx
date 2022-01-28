@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useTemplateContext } from "../context/TemplateContext";
 
 import {
   sendPageView,
@@ -6,12 +7,11 @@ import {
   setAppName,
   initialize,
 } from "../services/analytics";
-import { selectStepSelected, useStore } from "../store";
 
 export const useAnalytics = (appName) => {
-  const stepSelected = useStore(selectStepSelected);
+  const { stepSelected } = useTemplateContext();
   const page = stepSelected?.name;
-
+  console.log("stepSelected: ", stepSelected);
   useEffect(() => {
     initialize();
     sendLoaded();

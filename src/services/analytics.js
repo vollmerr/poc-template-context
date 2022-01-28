@@ -1,4 +1,5 @@
-const log = () => {}; //console.log;
+const debug = 1;
+const log = debug ? console.log : () => {};
 
 export const initialize = () => {
   log("[analytics] initialize");
