@@ -1,16 +1,16 @@
-import Params from "../../../components/Params";
-import Plans from "../../../components/Plans";
-import Purchase from "../../../components/Purchase";
-import Steps from "../../../components/Steps";
+import { useStore, selectFormProps } from "../../../store";
+import TemplateStep from "../../TemplateStep";
+
+const StepAChild = () => {
+  const formProps = useStore(selectFormProps);
+  return <div {...formProps}>step a child (with form props)</div>;
+};
 
 const StepA = () => {
   return (
-    <div>
-      <Params name="StepA" />
-      <Purchase name="StepA" />
-      <Plans name="StepA" />
-      <Steps name="StepA" />
-    </div>
+    <TemplateStep name="StepA">
+      <StepAChild />
+    </TemplateStep>
   );
 };
 

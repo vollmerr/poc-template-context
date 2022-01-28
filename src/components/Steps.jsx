@@ -1,17 +1,27 @@
-import { useSteps } from "../services/template";
+import {
+  useStore,
+  selectSteps,
+  selectStepProps,
+  selectStepSelected,
+} from "../store";
 
 const Steps = ({ name }) => {
-  const steps = useSteps();
-  console.log("steps: ", steps);
-  const active = steps.getActive();
-  const byKey = steps.getStepsByKey();
-  console.log("active: ", active);
-  console.log("byKey: ", byKey);
+  const stepSelected = useStore(selectStepSelected);
+  const stepProps = useStore(selectStepProps);
+  const steps = useStore(selectSteps);
 
   return (
-    <pre>
-      {name} - steps: {JSON.stringify({ active, byKey })}
-    </pre>
+    <div>
+      <pre>
+        {name} - selectedStep: {JSON.stringify(stepSelected)}
+      </pre>
+      <pre>
+        {name} - stepProps: {JSON.stringify(stepProps)}
+      </pre>
+      <pre>
+        {name} - steps: {JSON.stringify(steps)}
+      </pre>
+    </div>
   );
 };
 

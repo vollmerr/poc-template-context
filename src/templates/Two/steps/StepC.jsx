@@ -1,5 +1,7 @@
+import TemplateStep from "../../TemplateStep";
+
 const StepC = () => {
-  return <div>(in step c)</div>;
+  return <TemplateStep name="StepC" />;
 };
 
 export default StepC;

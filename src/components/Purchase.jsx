@@ -1,11 +1,11 @@
-import { usePurchase } from "../services/template";
+import { useStore, selectPurchaseProps } from "../store";
 
 const Purchase = ({ name }) => {
-  const purchase = usePurchase();
+  const purchaseProps = useStore(selectPurchaseProps);
 
   return (
     <pre>
-      {name} - purchase: {JSON.stringify(purchase)}
+      {name} - purchaseProps: {JSON.stringify(purchaseProps)}
     </pre>
   );
 };

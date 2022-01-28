@@ -1,7 +1,7 @@
-import { usePlans } from "../services/plans";
+import { selectPlans, useStore } from "../store";
 
 const Plans = ({ name }) => {
-  const plans = usePlans();
+  const plans = useStore(selectPlans);
 
   return (
     <pre>

@@ -1,11 +1,7 @@
-import Params from "../../../components/Params";
+import TemplateStep from "../../TemplateStep";
 
 const StepB = () => {
-  return (
-    <div>
-      <Params name="StepB" />
-    </div>
-  );
+  return <TemplateStep name="StepB">in b</TemplateStep>;
 };
-  
+
 export default StepB;

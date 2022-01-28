@@ -1,42 +1,56 @@
-import { useEffect, useState } from "react";
-import { Routes, Route, useSearchParams } from "react-router-dom";
-import { useAtom } from "jotai";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from "react";
+import { Route, Routes, useSearchParams } from "react-router-dom";
 
 import Params from "../components/Params";
-import lazyTemplates from "../templates/lazyTemplates";
-import { fetchPlans, PlanProvider } from "../services/plans";
-import { fetchTemplate, TemplateProvider } from "../services/template";
-import { templateAtom } from "../state/template";
+import RenderCount from "../components/RenderCount";
+import { lazyTemplates } from "../templates";
+import {
+  useAnalytics,
+  useEditMode,
+  useFavicon,
+  useNavigateWithSearch,
+  usePlansLoader,
+  useTemplatesLoader,
+  useTitle,
+} from "../hooks";
 
 const TemplatePage = () => {
-  // const [template, updateTemplate] = useAtom(templateAtom);
-  // const [template, setTemplate] = useState(null);
-  const [plans, setPlans] = useState(null);
+  const navigate = useNavigateWithSearch();
   const [params] = useSearchParams();
   const id = params.get("id");
-  const [template] = fetchTemplate(id);
-  console.log("template ", template);
+  const template = useTemplatesLoader(id);
+  const plans = usePlansLoader();
+
+  useAnalytics(template?.id);
+  useEditMode(template?.id);
+  useFavicon(template?.page.favicon);
+  useTitle(template?.page.title);
+
   useEffect(() => {
-    Promise.all([fetchPlans(), fetchTemplate(id)]).then(([p, t]) => {
-      // setPlans(p);
-      // updateTemplate(t);
-    });
+    if (!id) navigate("/home");
   }, [id]);
 
-  if (!template || !plans) return "loading template....";
+  useEffect(() => {
+    if (!template?.id) return;
+    if (window.location.pathname.match(template.id)) return;
+    navigate(template.id);
+  }, [template?.id]);
+
+  if (!template || !plans) {
+    return <div data-testid="FullScreenSpinner">loading....</div>;
+  }
 
   return (
-    <PlanProvider initialState={plans}>
-      <TemplateProvider initialState={template}>
-        template: {JSON.stringify(template)}
-        <Params name="TemplatePage" />
-        <Routes>
-          {Object.entries(lazyTemplates).map(([path, Element]) => (
-            <Route key={path} path={`${path}/*`} element={<Element />} />
-          ))}
-        </Routes>
-      </TemplateProvider>
-    </PlanProvider>
+    <div>
+      <Params name="TemplatePage" />
+      <RenderCount name="TemplatePage" />
+      <Routes>
+        {Object.entries(lazyTemplates).map(([path, Element]) => (
+          <Route key={path} path={`${path}/*`} element={<Element />} />
+        ))}
+      </Routes>
+    </div>
   );
 };
 
