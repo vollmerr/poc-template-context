@@ -44,8 +44,7 @@ export const planReducer = (state, action) => {
 export const PlanProvider = ({ children, initialState }) => {
   const initial = { ...initialPlanState, plans: initialState };
   const [state, dispatch] = useReducer(planReducer, initial);
-  // const value = useMemo(() => [state, dispatch], [state]);
-  const value = [state, dispatch];
+  const value = useMemo(() => [state, dispatch], [state]);
 
   return <PlanContext.Provider value={value}>{children}</PlanContext.Provider>;
 };

@@ -3,6 +3,8 @@ export * from "./useEditMode";
 export * from "./useFavicon";
 export * from "./useNavigateWithSearch";
 export * from "./useRenderCount";
+export * from "./useStepLinks";
 export * from "./useStepRoutes";
 export * from "./useTitle";
 export * from "./useTranslation";
+export * from "./useWithSearch";

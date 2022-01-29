@@ -13,7 +13,7 @@ const Router = () => {
         <ErrorBoundary>
           <Routes>
             <Route path="/" element={<PageLayout />}>
-              <Route index element={<HomePage />} />
+              <Route path="/home" element={<HomePage />} />
               <Route path="templates/*" element={<TemplatePage />} />
               <Route path="*" element={<Navigate to="templates" />} />
             </Route>
