@@ -11,7 +11,7 @@ import {
 export const useAnalytics = (appName) => {
   const { stepSelected } = useTemplateContext();
   const page = stepSelected?.name;
-  console.log("stepSelected: ", stepSelected);
+
   useEffect(() => {
     initialize();
     sendLoaded();
