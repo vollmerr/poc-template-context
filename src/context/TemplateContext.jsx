@@ -68,10 +68,10 @@ export const useTemplateContext = () => {
   }
 
   return {
-    template: selectTemplate(state),
-    steps: selectSteps(state),
-    stepSelected: selectStepSelected(state),
-    setTemplate: (value) => dispatch({ type: "setTemplate", value }),
     setStepSelected: (value) => dispatch({ type: "setStepSelected", value }),
+    setTemplate: (value) => dispatch({ type: "setTemplate", value }),
+    stepSelected: selectStepSelected(state),
+    steps: selectSteps(state),
+    template: selectTemplate(state),
   };
 };

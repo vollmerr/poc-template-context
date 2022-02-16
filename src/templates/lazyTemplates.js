@@ -1,6 +1,6 @@
 import { lazy } from "react";
 
 export const lazyTemplates = {
-  one: lazy(() => import("./One/TemplateOne")),
-  two: lazy(() => import("./Two/TemplateTwo")),
+  one: lazy(() => import("./TemplateOne/TemplateOne")),
+  two: lazy(() => import("./TemplateTwo/TemplateTwo")),
 };
